@@ -1,6 +1,3 @@
-//Error handling
-
-// hello
 
 function showError(message) {
 	const errorContainer = document.getElementById("main-container");
@@ -26,13 +23,13 @@ function showError(message) {
   }
   
   // Function to extract the jacket title from the query parameter
-  function getJacketTitleFromQuery() {
+  function getJacketNameFromQuery() {
 	try {
 	  const urlParams = new URLSearchParams(window.location.search);
-	  const title = urlParams.get("title");
-	  return title;
+	  const name = urlParams.get("name");
+	  return name;
 	} catch (error) {
-	  throw new Error("Sorry, we could not fetch the Title");
+	  throw new Error("Sorry, we could not fetch the title");
 	}
   }
   
@@ -42,12 +39,12 @@ function showError(message) {
 	  showLoadingIndicator();
 	  const jacketId = getJacketIdFromQuery();
   
-	  const title = getJacketTitleFromQuery();
+	  const name = getJacketNameFromQuery();
   
 	  if (!jacketId) showError(message);
   
 	  const response = await fetch(
-		`http://elinjakobsen.no/wp-json/wc/store/products/${jacketId}`
+		`https://elinjakobsen.no/wp-json/wc/store/products/${jacketId}`
 	  );
 	  const jacketDetail = await response.json();
   
@@ -55,8 +52,8 @@ function showError(message) {
 	  const jacketDetailContainer = document.getElementById("main-container");
 	  jacketDetailContainer.innerHTML = "";
   
-	  //Add jacket title to the title of the page
-	  jacketTitleContainer.textContent = title;
+	  //Add jacket name to the title of the page
+	  jacketTitleContainer.textContent = name;
 	  jacketDetailContainer.innerHTML += `
 		<div class="main-container-jacket">
 		<img src=${jacketDetail.images[0].src} alt=${jacketDetail.description} class="images-js">
@@ -65,7 +62,7 @@ function showError(message) {
 		<div>
 			<h1>${jacketDetail.name}</h1> 
 			<p>${jacketDetail.description}</p>
-			<p>USD ${jacketDetail.prices}</p>
+			<p>USD ${jacketDetail.prices.price}</p>
 		</div>
 		<div>
 			<h2>Choose size</h2>

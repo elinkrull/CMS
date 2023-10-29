@@ -13,15 +13,15 @@ function showError(message) {
   }
   
   //  API call
-  
-  const urlRainyDays = "http://elinjakobsen.no/wp-json/wc/store/products";
+
+  const apiUrl = "https://elinjakobsen.no/wp-json/wc/store/products";
   
   async function getJackets() {
 	try {
 	  showLoadingIndicator();
-	  const response = await fetch(urlRainyDays);
+	  const response = await fetch(apiUrl);
 	  const result = await response.json();
-	  return result;
+	  return result;  
 	} catch (error) {
 	  throw new Error("Sorry, we could not fetch the jackets");
 	}
@@ -37,9 +37,9 @@ function showError(message) {
 		const jacket = productJackets[i];
   
 		jacketsProductPageContainer.innerHTML += `<div class="all-jackets-container">
-											 <a href="specificproduct.html?id=${jacket.id}&title=${jacket.name}"><img src="${jacket.images[0].src}" alt="${jacket.description}" class="images-js"></a>
+											 <a href="productdetail.html?id=${jacket.id}&name=${jacket.name}"><img src="${jacket.images[0].src}" alt="${jacket.description}" class="images-js"></a>
 											<h2>${jacket.name}</h2>
-											<p>USD ${jacket.prices}</p>
+											<p>USD ${jacket.prices.price}</p>
 											</div>`;
 	  }
 	} catch (error) {
